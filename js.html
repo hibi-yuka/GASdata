@@ -1,0 +1,37 @@
+<script>
+var map;
+var point1 = [];
+var infoWindow = [];
+
+function initMap() {
+ 
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var lRow = sheet.getLastRow(); //最終行を取得する
+  for( var i = 1; i <4; i++){
+    var getVal = sheet.getRange(lRow,i).getValue(); //IRowには最終行を示す値を取得しており、列部分をfor文で回せば全ての最終行の値を取得する事が可能である
+    if( i == 1){
+     var ame = getVal;
+    }else if( i == 2){
+    var lat = getVal;
+    }else if( i == 3){
+    var lng = getVal;
+    }
+  } 
+     var latlng = new google.maps.LatLng(lat,lng);//中心の緯度, 経度
+     var map = new google.maps.Map(document.getElementById('sample'), {
+          zoom: 14,//ズームの調整
+          center: latlng//上で設定した中心
+    });
+     var marker = new google.maps.Marker({
+          position: latlng,
+          map: map
+  　 });
+}
+   
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADnpWr85gPCa4ymYUJMCAltNQrdfWwxa4&callback=initMap"></script>  <!-- 取得したAPIを利用する-->
+
+
+
+
+

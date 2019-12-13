@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>テスト</title>
+
+</head>
+
+<body>
+
+<h1>Google Map</h1>
+
+<p>ここにGPSで取得した情報を表示します。</p>
+ <input type="button" value="前の記録時間を表示する" onclick="oldtime();"/>　
+ 
+ <input type="button" value="データ更新" onclick="initMap();"/>　
+
+<div id="sample"  style="width:900px; height:500px;  margin: 10px auto;" ></div>　<!--マップを表示させるdiv-->
+
+<script>
+function initMap() {
+　//Javascript側からGAS(gs)を呼び出す
+  google.script.run.withSuccessHandler(e => { const [ame, lat, lng] = e;
+    var latlng = new google.maps.LatLng(lat, lng);
+    var map = new google.maps.Map(document.getElementById('sample'), {zoom: 14, center: latlng});
+    var marker = new google.maps.Marker({position: latlng, map: map});
+  }).getData();//getData関数を呼び出して、成功すればコールバック内の処理が行われる
+}
+
+function oldtime(){
+ google.script.run.withSuccessHandler(e => { const [ame, lat, lng] = e;
+    var latlng = new google.maps.LatLng(lat, lng);
+    var map = new google.maps.Map(document.getElementById('sample'), {zoom: 14, center: latlng});
+    var marker = new google.maps.Marker({position: latlng, map: map});
+  }).newData();//getData関数を呼び出して、成功すればコールバック内の処理が行われる
+}
+
+
+
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADnpWr85gPCa4ymYUJMCAltNQrdfWwxa4&callback=initMap"></script>  <!-- 取得したAPIを利用する-->
+
+<?!= HtmlService.createHtmlOutputFromFile('js').getContent(); ?> 　<!-- 記述した箇所('js1')のHTMLファイルを読み込む -->
+
+
+<p>過去のGPS表記一覧</p>
+
+</body>
+
+</html>
+
+
+
+    
+
